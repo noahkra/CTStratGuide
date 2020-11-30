@@ -1,0 +1,12 @@
+## Sublime Text
+# Cache files for Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# Workspace files are user-specific
+*.sublime-workspace
+
+# SFTP configuration file
+sftp-config.json
+sftp-config-alt*.json

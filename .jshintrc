@@ -1,0 +1,9 @@
+{
+	"esversion"		: 6,        // {int} Specify the ECMAScript version to which the code must adhere.
+	"loopfunc"      : true,     // true: Tolerate functions being defined in loops
+	"unused"        : false,    // Unused variables:
+	"node"			: true,    	// Node.js
+	"globals": {				// additional predefined global variables
+		"d3"		: true
+	}
+}

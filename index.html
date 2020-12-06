@@ -23,15 +23,13 @@
 				height           : 100vh;
 			}
 
-			#levelSelection {
+			#levelSelection, #levelSelectionText {
 				transition : 150ms;
 				position   : absolute;
 			}
 
 			#levelSelectionText {
-				transition : 150ms;
 				transform  : rotatex(20deg);
-				position   : absolute;
 			}
 
 			#levelSelectionText text {
@@ -91,6 +89,8 @@
 				float      : right;
 				width      : 36px;
 				fill       : gray;
+				top        : -70px;
+				position   : relative;
 			}
 
 			#popup svg:hover {
@@ -103,6 +103,14 @@
 
 			#popup #sidebar {
 				border-right: 10px;
+			}
+
+			#popupHeader {
+				font-size   : 4.5vh;
+				text-align  : center;
+				display     : block;
+				color       : white;
+				line-height : 70px;
 			}
 
 		</style>
@@ -134,14 +142,15 @@
 			</text>
 		</div>
 		<div id="popup">
+			<text id="popupHeader"></text>
 			<svg id="svgClose" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="deselectLevel()">
-				<use href="#icon_close">
+				<use href="#icon_close"></use>
 			</svg>
 			<svg id="svgChevRight" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="changeLevel('n')">
-				<use href="#icon_chevron_right">
+				<use href="#icon_chevron_right"></use>
 			</svg>
 			<svg id="svgChevLeft" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="changeLevel('p')">
-				<use href="#icon_chevron_left">
+				<use href="#icon_chevron_left"></use>
 			</svg>
 			<div id="sidebar">
 
@@ -149,11 +158,6 @@
 		</div>
 		<script src="d3.js"></script>
 		<script src="index.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			d3.csv("strats.csv", function(data) {
-				console.log(data);
-			});
-		</script>
 		<svg>
 			<defs>
 				<path id="icon_close" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>

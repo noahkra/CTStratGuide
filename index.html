@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<style>
+
 			html {
 				user-select: none;
 				font-family: Gravity;
@@ -13,58 +14,103 @@
 			}
 
 			body {
-				overflow: hidden;
-				background-color: #272729;
-				margin: 0;
-				display: flex;
-				height: 100vh;
-				justify-content: center;
-				perspective: 1600px
+				background-color : #272729;
+				justify-content  : center;
+				perspective      : 1600px;
+				overflow         : hidden;
+				display          : flex;
+				margin           : 0;
+				height           : 100vh;
 			}
 
-			#explanation {
-				position: absolute;
-				transform: rotatex(20deg);
+			#levelSelection {
+				transition : 150ms;
+				position   : absolute;
 			}
 
-			#explanation text {
+			#levelSelectionText {
+				transition : 150ms;
+				transform  : rotatex(20deg);
+				position   : absolute;
+			}
 
-				filter: blur(0.4px);
-				font-size: 60px;
-				color: white;
-				text-shadow: -2px 3px 2px #e6a556;
+			#levelSelectionText text {
+				text-shadow : -2px 3px 2px #e6a556;
+				font-size   : 4.5vh;
+				filter      : blur(0.4px);
+				color       : white;
+			}
+
+			#prevWorld {
+				display: none;
+			}
+
+			#popup {
+				background-color : #272729;
+				border-radius    : 4px;
+				box-shadow       : 0px 2px 6px 0px black;
+				visibility       : hidden;
+				transition       : 150ms;
+				transform        : scale(0.95);
+				position         : absolute;
+				opacity          : 0%;
+				margin           : 5vh 15vw;
+				height           : 90vh;
+				width            : 70vw;
 			}
 
 			img {
-				position: relative;
-				height: 100vh;
+				position : relative;
+				height   : 100vh;
 			}
 
-			svg {
-				display: block;
-				margin: auto;
-				position: relative;
-				height: 100%;
-				width: 100%;
-				top: calc(-100vh - 4px);
+			#menuSVG {
+				position : relative;
+				display  : block;
+				margin   : auto;
+				height   : 100%;
+				width    : 100%;
+				top      : calc(-100vh - 4px);
 			}
 
 			polygon {
-				opacity: 0%;
-				fill: white;
-				transition: 100ms;
+				transition : 100ms;
+				opacity    : 0%;
+				fill       : white;
 			}
 
 			polygon:hover {
 				opacity: 50%;
 			}
 
+			#popup svg {
+				transition : .15s;
+				cursor     : pointer;
+				margin     : 30px;
+				height     : 36px;
+				float      : right;
+				width      : 36px;
+				fill       : gray;
+			}
+
+			#popup svg:hover {
+				fill: white;
+			}
+
+			#svgChevLeft {
+				visibility: hidden;
+			}
+
+			#popup #sidebar {
+				border-right: 10px;
+			}
+
 		</style>
 	</head>
 	<body>
-		<div id="background">
+		<div id="levelSelection">
 			<img src="./levels/1-1.png">
-			<svg viewBox="0 0 2560 1440">
+			<svg id="menuSVG" viewBox="0 0 2560 1440">
 				<polygon points="269,690	288,626		396,626		379,690" onclick="changeLevel(1)"/>
 				<polygon points="482,690	497,626		604,626		592,690" onclick="changeLevel(2)"/>
 				<polygon points="694,690	705,626		814,626		805,690" onclick="changeLevel(3)"/>
@@ -76,15 +122,44 @@
 				<polygon points="1971,690	1958,626	2066,626	2080,690" onclick="changeLevel(9)"/>
 				<polygon points="2183,690	2167,626	2275,626	2293,690" onclick="changeLevel(10)"/>
 
-				<polygon points="1978,1167	1963.5,1084	2175.5,1084	2194.5,1167" onclick="play()"/>
+				<polygon points="1950,1167	1963.5,1084	2175.5,1084	2194.5,1167" onclick="changeWorld(false)" id="prevWorld"/>
+				<polygon points="1978,1167	1963.5,1084	2200,1084	2194.5,1167" onclick="changeWorld(true)" id="nextWorld"/>
+
+				<polygon points="1978,1167	1963.5,1084	2175.5,1084	2194.5,1167" onclick="selectLevel()"/>
 			</svg>
 		</div>
-		<div id="explanation">
+		<div id="levelSelectionText">
 			<text>
 				SELECT ANY LEVEL AND CLICK PLAY TO VIEW THE STRATEGIES!
 			</text>
 		</div>
+		<div id="popup">
+			<svg id="svgClose" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="deselectLevel()">
+				<use href="#icon_close">
+			</svg>
+			<svg id="svgChevRight" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="changeLevel('n')">
+				<use href="#icon_chevron_right">
+			</svg>
+			<svg id="svgChevLeft" preserveAspectRatio="none" viewBox="0 0 24 24" onclick="changeLevel('p')">
+				<use href="#icon_chevron_left">
+			</svg>
+			<div id="sidebar">
+
+			</div>
+		</div>
 		<script src="d3.js"></script>
 		<script src="index.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			d3.csv("strats.csv", function(data) {
+				console.log(data);
+			});
+		</script>
+		<svg>
+			<defs>
+				<path id="icon_close" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+				<path id="icon_chevron_left" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+				<path id="icon_chevron_right" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+			</defs>
+		</svg>
 	</body>
 </html>
